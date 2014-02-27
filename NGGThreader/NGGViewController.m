@@ -11,6 +11,7 @@
 @interface NGGViewController ()<UICollisionBehaviorDelegate>
 @property (nonatomic, strong) UIImageView *ballImageView;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
+@property (nonatomic, strong) UIPushBehavior *floatUpBeahavior;
 @end
 
 @implementation NGGViewController
@@ -36,6 +37,12 @@
     collisionBehavior.collisionDelegate = self;
     [animator addBehavior:collisionBehavior];
     
+    UIPushBehavior *floatUpBeahavior = [[UIPushBehavior alloc] initWithItems:@[self.ballImageView] mode:UIPushBehaviorModeInstantaneous];
+    floatUpBeahavior.pushDirection = CGVectorMake(0, -0.5);
+    floatUpBeahavior.active = NO;
+    [animator addBehavior:floatUpBeahavior];
+    self.floatUpBeahavior = floatUpBeahavior;
+    
     self.animator = animator;
 }
 
@@ -51,6 +58,14 @@
 - (CGSize)displaySize
 {
     return [[UIScreen mainScreen] bounds].size;
+}
+
+#pragma mark - Touch Event
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSLog(@"%@",NSStringFromSelector(_cmd));
+    self.floatUpBeahavior.active = YES;
 }
 
 #pragma mark - UICollisionBehaviorDelegate
