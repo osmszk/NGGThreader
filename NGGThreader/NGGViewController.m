@@ -9,7 +9,7 @@
 #import "NGGViewController.h"
 
 @interface NGGViewController ()
-
+@property (nonatomic, strong) UIDynamicAnimator *animator;
 @end
 
 @implementation NGGViewController
@@ -22,12 +22,15 @@
     
     CGFloat ballWidth = 40;
     CGFloat ballHeight = 40;
-    UIImageView *ballImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ball"]];
+    UIImageView *ballImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ball"]];
     ballImageView.frame = CGRectMake(0, 0, ballWidth, ballHeight);
     ballImageView.center = CGPointMake([self displaySize].width/2, [self displaySize].height/2);
     [self.view addSubview:ballImageView];
     
-    
+    UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    UIGravityBehavior *gravityBehvior = [[UIGravityBehavior alloc] initWithItems:@[ballImageView]];
+    [animator addBehavior:gravityBehvior];
+    self.animator = animator;
     
 }
 
