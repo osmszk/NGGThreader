@@ -17,13 +17,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    
+    
+    CGFloat ballWidth = 40;
+    CGFloat ballHeight = 40;
+    UIImageView *ballImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ball"]];
+    ballImageView.frame = CGRectMake(0, 0, ballWidth, ballHeight);
+    ballImageView.center = CGPointMake([self displaySize].width/2, [self displaySize].height/2);
+    [self.view addSubview:ballImageView];
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Custom
+
+- (CGSize)displaySize
+{
+    return [[UIScreen mainScreen] bounds].size;
 }
 
 @end
