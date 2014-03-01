@@ -34,14 +34,18 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 
 @implementation NGGViewController
 
+//ViewControllerのViewが生成されたときに呼ばれる
+//UIに関する部分はここでaddSubViewする
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //背景表示
     UIView *bgView = [[UIView alloc] initWithFrame:self.view.frame];
     bgView.backgroundColor = [UIColor colorWithRed:0 green:150.0f/255.0f blue:255.0f alpha:1.0f];
     [self.view addSubview:bgView];
     
+    //ボール表示
     CGFloat ballWidth = 40;
     CGFloat ballHeight = 40;
     UIImageView *ballImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ball"]];
@@ -50,11 +54,13 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     [self.view addSubview:ballImageView];
     self.ballImageView = ballImageView;
     
+    //地面表示
     UIImageView *groundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ground"]];
     groundImageView.frame = CGRectMake(0, [self displaySize].height-40, 640, 40);
     [self.view addSubview:groundImageView];
     self.groundImageView = groundImageView;
     
+    //スコアラベル表示
     UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self displaySize].width, 100)];
     scoreLabel.backgroundColor = [UIColor clearColor];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
@@ -68,6 +74,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     _viewStatus = NGGVIewStatusStandby;
 }
 
+//メモリが切迫したときに呼ばれる
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -77,11 +84,14 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 
 #pragma mark - Custom
 
+//本来はUtililtyクラスつくってクラスメソッドとして呼びたい
+//ディスプレイサイズ
 - (CGSize)displaySize
 {
     return [[UIScreen mainScreen] bounds].size;
 }
 
+//重力とかビヘイビア（iOS7からの機能）を各オブジェクトに付与
 - (void)setBehaviors
 {
     UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
@@ -109,6 +119,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     self.animator = animator;
 }
 
+//ビューを更新
 - (void)updateViews
 {
     for(UIView *scenary in self.sceneries){
@@ -131,8 +142,6 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
         }
         
         [self setBuildingViews];
-        
-        
     }
     
     //衝突判定
@@ -147,6 +156,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     }
 }
 
+//障害物表示
 - (void)setBuildingViews
 {
     NSInteger offset = arc4random()%200-100;
@@ -164,6 +174,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     [self.sceneries addObject:downSideBuildingImageView];
 }
 
+//ゲームオーバー表示
 - (void)setGameOverLabel
 {
     UILabel *gameOverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, [self displaySize].width, 200)];
@@ -176,18 +187,20 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     self.gameOverLabel = gameOverLabel;
 }
 
+//スタートラベル表示
 - (void)setStanbyLabel
 {
     UILabel *startLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, [self displaySize].width, 200)];
     startLabel.backgroundColor = [UIColor clearColor];
     startLabel.textAlignment = NSTextAlignmentCenter;
     startLabel.textColor = [UIColor whiteColor];
-    startLabel.text = @"Tap to Start!";
+    startLabel.text = @"TAP TO START!";
     startLabel.font = [UIFont boldSystemFontOfSize:32];
     [self.view addSubview:startLabel];
     self.startLabel = startLabel;
 }
 
+//リセット
 - (void)resetViewsAndAnimator
 {
     [self.startLabel removeFromSuperview];
@@ -206,13 +219,17 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     [self updateScore];
 }
 
+//スコア更新
 - (void)updateScore
 {
     self.scoreLabel.text = [NSString stringWithFormat:@"%d",(int)self.score];
 }
 
 #pragma mark - Touch Event
+//これはControl+6で各メソッドにジャンプするための目印みたいなもの
 
+//タッチイベント UIResponderで実装
+//タッチ開始時に呼ばれる
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"%@",NSStringFromSelector(_cmd));
@@ -231,6 +248,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 
 #pragma mark - UICollisionBehaviorDelegate
 
+//衝突ビヘイビアのデリゲート
 - (void)collisionBehavior:(UICollisionBehavior*)behavior beganContactForItem:(id <UIDynamicItem>)item withBoundaryIdentifier:(id <NSCopying>)identifier atPoint:(CGPoint)p
 {
     NSLog(@"%@",NSStringFromSelector(_cmd));
@@ -240,6 +258,5 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
 }
-
 
 @end
