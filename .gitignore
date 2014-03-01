@@ -1,0 +1,24 @@
+# osx noise
+.DS_Store
+profile
+
+# xcode noise
+build/*
+AdHoc/*
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
+
+#project
+**/*.xcodeproj/*
+!**/*.xcodeproj/project.pbxproj
+!*.xcodeproj/default.*
+!**.xcodeproj/default.*
+
+#zip
+*.zip
