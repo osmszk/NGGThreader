@@ -22,6 +22,10 @@
 {
     [super viewDidLoad];
 	
+    UIView *bgView = [[UIView alloc] initWithFrame:self.view.frame];
+    bgView.backgroundColor = [UIColor colorWithRed:0 green:150.0f/255.0f blue:255.0f alpha:1.0f];
+    [self.view addSubview:bgView];
+    
     CGFloat ballWidth = 40;
     CGFloat ballHeight = 40;
     UIImageView *ballImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ball"]];
