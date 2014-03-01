@@ -43,6 +43,7 @@
     UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballImageView]];
     collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
     collisionBehavior.collisionDelegate = self;
+    [collisionBehavior addBoundaryWithIdentifier:@"ground" fromPoint:CGPointMake(0, groundImageView.frame.origin.y) toPoint:CGPointMake(groundImageView.frame.size.width, groundImageView.frame.origin.y)];
     [animator addBehavior:collisionBehavior];
     
     UIPushBehavior *floatUpBeahavior = [[UIPushBehavior alloc] initWithItems:@[self.ballImageView] mode:UIPushBehaviorModeInstantaneous];
@@ -53,9 +54,8 @@
     
     self.animator = animator;
     
-    
-    UIDynamicBehavior *scrollAnimator = [[UIDynamicBehavior alloc] init];
-    scrollAnimator.action = ^ {
+    UIDynamicBehavior *scrollBehavior = [[UIDynamicBehavior alloc] init];
+    scrollBehavior.action = ^ {
         NSTimeInterval interval = self.animator.elapsedTime;
         
         groundImageView.center = CGPointMake(groundImageView.center.x-SCROLL_SPEED, groundImageView.center.y);
@@ -66,7 +66,7 @@
         
         NSLog(@"action %f x:%f",interval,groundImageView.center.x);
     };
-    [self.animator addBehavior:scrollAnimator];
+    [self.animator addBehavior:scrollBehavior];
 }
 
 - (void)didReceiveMemoryWarning
