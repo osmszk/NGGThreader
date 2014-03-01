@@ -17,6 +17,10 @@ About
 4. [7gogoの部屋](http://7gogo.jp/lp/k5_WiBKUsf1WkVIvojdMdG== "7gogoの部屋")
 5. [作者のTwitter](https://twitter.com/s_0samu "Twitter")
 
+SpriteKit version(made by [Rento83](https://twitter.com/Rento83 "Twitter"))
+---------
+https://github.com/Rento83/NGGFirstGame
+
 License
 ----------
 Copyright &copy; Osamu Suzuki
