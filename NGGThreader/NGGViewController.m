@@ -9,6 +9,8 @@
 #import "NGGViewController.h"
 
 #define SCROLL_SPEED 5
+#define INTER_SPACE 100
+#define TAG_BUILDING 1
 
 typedef NS_ENUM(NSInteger, NGGViewStatus) {
     NGGVIewStatusNone = 0,
@@ -20,12 +22,14 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 @interface NGGViewController ()<UICollisionBehaviorDelegate>
 @property (nonatomic, strong) UILabel *startLabel;
 @property (nonatomic, strong) UILabel *gameOverLabel;
+@property (nonatomic, strong) UILabel *scoreLabel;
 @property (nonatomic, strong) UIImageView *ballImageView;
 @property (nonatomic, strong) UIImageView *groundImageView;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIPushBehavior *floatUpBehavior;
 @property (nonatomic, strong) NSMutableArray *sceneries;
 @property (nonatomic, assign) NGGViewStatus viewStatus;
+@property (nonatomic, assign) NSInteger score;
 @end
 
 @implementation NGGViewController
@@ -50,6 +54,15 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     groundImageView.frame = CGRectMake(0, [self displaySize].height-40, 640, 40);
     [self.view addSubview:groundImageView];
     self.groundImageView = groundImageView;
+    
+    UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self displaySize].width, 100)];
+    scoreLabel.backgroundColor = [UIColor clearColor];
+    scoreLabel.textAlignment = NSTextAlignmentCenter;
+    scoreLabel.textColor = [UIColor whiteColor];
+    scoreLabel.font = [UIFont boldSystemFontOfSize:32];
+    [self.view addSubview:scoreLabel];
+    self.scoreLabel = scoreLabel;
+    [self updateScore];
     
     [self setStanbyLabel];
     _viewStatus = NGGVIewStatusStandby;
@@ -100,6 +113,11 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 {
     for(UIView *scenary in self.sceneries){
         scenary.center = CGPointMake(scenary.center.x-SCROLL_SPEED, scenary.center.y);
+        if(scenary.tag == TAG_BUILDING
+           && (int)(scenary.frame.origin.x+scenary.frame.size.width)==(int)([self displaySize].width/2)){
+            self.score++;
+            [self updateScore];
+        }
     }
     
     if (self.groundImageView.frame.origin.x <= -[self displaySize].width) {
@@ -113,6 +131,8 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
         }
         
         [self setBuildingViews];
+        
+        
     }
     
     //衝突判定
@@ -129,17 +149,17 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 
 - (void)setBuildingViews
 {
-    CGFloat interSpace = 80;
     NSInteger offset = arc4random()%200-100;
     CGFloat downSideYPostion = [self displaySize].height/2 + offset;//[self displaySize].height/2 -+100
     
     UIImageView *upSideBuildingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"building"]];
-    upSideBuildingImageView.frame = CGRectMake([self displaySize].width, downSideYPostion-400-interSpace, 60, 400);
+    upSideBuildingImageView.frame = CGRectMake([self displaySize].width, downSideYPostion-400-INTER_SPACE, 60, 400);
     [self.view insertSubview:upSideBuildingImageView belowSubview:self.groundImageView];
     [self.sceneries addObject:upSideBuildingImageView];
     
     UIImageView *downSideBuildingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"building"]];
     downSideBuildingImageView.frame = CGRectMake([self displaySize].width, downSideYPostion, 60, 400);
+    downSideBuildingImageView.tag = TAG_BUILDING;
     [self.view insertSubview:downSideBuildingImageView belowSubview:self.groundImageView];
     [self.sceneries addObject:downSideBuildingImageView];
 }
@@ -181,6 +201,14 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     self.groundImageView.frame = CGRectMake(0, [self displaySize].height-40, 640, 40);
     [self.view insertSubview:self.groundImageView belowSubview:self.ballImageView];
     [self.sceneries addObject:self.groundImageView];
+    
+    self.score = 0;
+    [self updateScore];
+}
+
+- (void)updateScore
+{
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d",(int)self.score];
 }
 
 #pragma mark - Touch Event
