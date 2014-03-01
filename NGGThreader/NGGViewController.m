@@ -12,12 +12,14 @@
 
 typedef NS_ENUM(NSInteger, NGGViewStatus) {
     NGGVIewStatusNone = 0,
-    NGGVIewStatusAlive = 1,
-    NGGVIewStatusGameOver = 2,
-    NGGVIewStatusStandby = 3,
+    NGGVIewStatusStandby = 1,
+    NGGVIewStatusAlive = 2,
+    NGGVIewStatusGameOver = 3,
 };
 
 @interface NGGViewController ()<UICollisionBehaviorDelegate>
+@property (nonatomic, strong) UILabel *startLabel;
+@property (nonatomic, strong) UILabel *gameOverLabel;
 @property (nonatomic, strong) UIImageView *ballImageView;
 @property (nonatomic, strong) UIImageView *groundImageView;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
@@ -49,9 +51,8 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     [self.view addSubview:groundImageView];
     self.groundImageView = groundImageView;
     
-    [self resetViewsAndAnimator];
-    [self setBehaviors];
-    _viewStatus = NGGVIewStatusAlive;
+    [self setStanbyLabel];
+    _viewStatus = NGGVIewStatusStandby;
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,8 +98,6 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 
 - (void)updateViews
 {
-//    NSTimeInterval interval = self.animator.elapsedTime;
-    
     for(UIView *scenary in self.sceneries){
         scenary.center = CGPointMake(scenary.center.x-SCROLL_SPEED, scenary.center.y);
     }
@@ -126,8 +125,6 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
             break;
         }
     }
-    
-//    NSLog(@"action %f x:%f",interval,self.groundImageView.center.x);
 }
 
 - (void)setBuildingViews
@@ -135,8 +132,6 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     CGFloat interSpace = 80;
     NSInteger offset = arc4random()%200-100;
     CGFloat downSideYPostion = [self displaySize].height/2 + offset;//[self displaySize].height/2 -+100
-    
-    NSLog(@"yPostion:%f",downSideYPostion);
     
     UIImageView *upSideBuildingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"building"]];
     upSideBuildingImageView.frame = CGRectMake([self displaySize].width, downSideYPostion-400-interSpace, 60, 400);
@@ -158,13 +153,27 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     gameOverLabel.text = @"GAME OVER";
     gameOverLabel.font = [UIFont boldSystemFontOfSize:32];
     [self.view addSubview:gameOverLabel];
-    [self.sceneries addObject:gameOverLabel];//まとめてremoveFromSuperviewしてもらうため
+    self.gameOverLabel = gameOverLabel;
+}
+
+- (void)setStanbyLabel
+{
+    UILabel *startLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, [self displaySize].width, 200)];
+    startLabel.backgroundColor = [UIColor clearColor];
+    startLabel.textAlignment = NSTextAlignmentCenter;
+    startLabel.textColor = [UIColor whiteColor];
+    startLabel.text = @"Tap to Start!";
+    startLabel.font = [UIFont boldSystemFontOfSize:32];
+    [self.view addSubview:startLabel];
+    self.startLabel = startLabel;
 }
 
 - (void)resetViewsAndAnimator
 {
+    [self.startLabel removeFromSuperview];
+    [self.gameOverLabel removeFromSuperview];
     [self.sceneries makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    self.sceneries = [[NSMutableArray alloc] init];
+    self.sceneries = [NSMutableArray array];
     
     [self.animator removeAllBehaviors];
     
@@ -182,6 +191,10 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     if (_viewStatus == NGGVIewStatusAlive) {
         self.floatUpBehavior.active = YES;
     }else if(_viewStatus == NGGVIewStatusGameOver){
+        [self setStanbyLabel];
+        [self.gameOverLabel removeFromSuperview];
+        _viewStatus = NGGVIewStatusStandby;
+    }else if (_viewStatus == NGGVIewStatusStandby){
         [self resetViewsAndAnimator];
         [self setBehaviors];
         _viewStatus = NGGVIewStatusAlive;
