@@ -8,10 +8,12 @@
 
 #import "NGGViewController.h"
 
+#define SCROLL_SPEED 15
+
 @interface NGGViewController ()<UICollisionBehaviorDelegate>
 @property (nonatomic, strong) UIImageView *ballImageView;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
-@property (nonatomic, strong) UIPushBehavior *floatUpBeahavior;
+@property (nonatomic, strong) UIPushBehavior *floatUpBehavior;
 @end
 
 @implementation NGGViewController
@@ -28,6 +30,12 @@
     [self.view addSubview:ballImageView];
     self.ballImageView = ballImageView;
     
+    UIImageView *groundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ground"]];
+    groundImageView.frame = CGRectMake(0, [self displaySize].height-40, 640, 40);
+    [self.view addSubview:groundImageView];
+    
+    
+    
     UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     UIGravityBehavior *gravityBehvior = [[UIGravityBehavior alloc] initWithItems:@[ballImageView]];
     [animator addBehavior:gravityBehvior];
@@ -41,9 +49,24 @@
     floatUpBeahavior.pushDirection = CGVectorMake(0, -0.5);
     floatUpBeahavior.active = NO;
     [animator addBehavior:floatUpBeahavior];
-    self.floatUpBeahavior = floatUpBeahavior;
+    self.floatUpBehavior = floatUpBeahavior;
     
     self.animator = animator;
+    
+    
+    UIDynamicBehavior *scrollAnimator = [[UIDynamicBehavior alloc] init];
+    scrollAnimator.action = ^ {
+        NSTimeInterval interval = self.animator.elapsedTime;
+        
+        groundImageView.center = CGPointMake(groundImageView.center.x-SCROLL_SPEED, groundImageView.center.y);
+        
+        if (groundImageView.frame.origin.x <= -[self displaySize].width) {
+            groundImageView.center = CGPointMake([self displaySize].width, groundImageView.center.y);
+        }
+        
+        NSLog(@"action %f x:%f",interval,groundImageView.center.x);
+    };
+    [self.animator addBehavior:scrollAnimator];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +88,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"%@",NSStringFromSelector(_cmd));
-    self.floatUpBeahavior.active = YES;
+    self.floatUpBehavior.active = YES;
 }
 
 #pragma mark - UICollisionBehaviorDelegate

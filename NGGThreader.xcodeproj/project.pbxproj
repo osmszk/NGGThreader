@@ -22,6 +22,7 @@
 		978C919D18BFB8F80002B96E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 978C919B18BFB8F80002B96E /* InfoPlist.strings */; };
 		978C919F18BFB8F80002B96E /* NGGThreaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 978C919E18BFB8F80002B96E /* NGGThreaderTests.m */; };
 		978C91AB18BFB93E0002B96E /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 978C91AA18BFB93E0002B96E /* ball.png */; };
+		978C91AF18C1A13D0002B96E /* ground.png in Resources */ = {isa = PBXBuildFile; fileRef = 978C91AE18C1A13D0002B96E /* ground.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		978C919C18BFB8F80002B96E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		978C919E18BFB8F80002B96E /* NGGThreaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGGThreaderTests.m; sourceTree = "<group>"; };
 		978C91AA18BFB93E0002B96E /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
+		978C91AE18C1A13D0002B96E /* ground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ground.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 		978C91A918BFB93E0002B96E /* image */ = {
 			isa = PBXGroup;
 			children = (
+				978C91AE18C1A13D0002B96E /* ground.png */,
 				978C91AA18BFB93E0002B96E /* ball.png */,
 			);
 			path = image;
@@ -248,6 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				978C91AF18C1A13D0002B96E /* ground.png in Resources */,
 				978C918C18BFB8F80002B96E /* Images.xcassets in Resources */,
 				978C917E18BFB8F80002B96E /* InfoPlist.strings in Resources */,
 				978C91AB18BFB93E0002B96E /* ball.png in Resources */,
@@ -481,6 +485,7 @@
 				978C91A418BFB8F80002B96E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		978C91A518BFB8F80002B96E /* Build configuration list for PBXNativeTarget "NGGThreaderTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +494,7 @@
 				978C91A718BFB8F80002B96E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
