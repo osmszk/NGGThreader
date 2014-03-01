@@ -81,6 +81,11 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     // Dispose of any resources that can be recreated.
 }
 
+//ステータスバー非表示
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 #pragma mark - Custom
 
