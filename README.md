@@ -6,7 +6,7 @@ This simple game made for the team "755Apps". The linsens is [MIT].
 About
 ---------
 
-![](http://gyazo.com/1946add7c223472d393274f514f9c702.gif)
+![](https://raw.github.com/osmszk/NGGThreader/master/NGGThreader/resources/screenshot/screenshot.gif)
 
 * 7gogoから発足したアプリ開発チーム（適当）の最初のゲームが決定して、最初のデモアプリをつくりました。
 * UIKitでむりくりつくってます。
