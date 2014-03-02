@@ -59,6 +59,7 @@
 		978C91AA18BFB93E0002B96E /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		978C91AE18C1A13D0002B96E /* ground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ground.png; sourceTree = "<group>"; };
 		978C91CF18C2523E0002B96E /* building.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building.png; sourceTree = "<group>"; };
+		97C18FD218C32C0900B53C29 /* screenshot.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screenshot.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				978C91A918BFB93E0002B96E /* image */,
+				97C18FD118C32C0900B53C29 /* screenshot */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -175,6 +177,14 @@
 				978C91AA18BFB93E0002B96E /* ball.png */,
 			);
 			path = image;
+			sourceTree = "<group>";
+		};
+		97C18FD118C32C0900B53C29 /* screenshot */ = {
+			isa = PBXGroup;
+			children = (
+				97C18FD218C32C0900B53C29 /* screenshot.gif */,
+			);
+			path = screenshot;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
