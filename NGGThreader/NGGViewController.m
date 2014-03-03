@@ -8,7 +8,7 @@
 
 #import "NGGViewController.h"
 
-#define SCROLL_SPEED 5
+#define SCROLL_SPEED 4
 #define INTER_SPACE 100
 #define TAG_BUILDING 1
 
