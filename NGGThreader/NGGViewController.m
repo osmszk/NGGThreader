@@ -35,14 +35,14 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 @implementation NGGViewController
 
 //ViewControllerのViewが生成されたときに呼ばれる
-//UIに関する部分はここでaddSubViewする
+//UIに関する処理はここに書く。addSubViewとか。
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     //背景表示
     UIView *bgView = [[UIView alloc] initWithFrame:self.view.frame];
-    bgView.backgroundColor = [UIColor colorWithRed:0 green:150.0f/255.0f blue:255.0f alpha:1.0f];
+    bgView.backgroundColor = [UIColor colorWithRed:0 green:150.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
     [self.view addSubview:bgView];
     
     //ボール表示
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     CGFloat ballHeight = 40;
     UIImageView *ballImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ball"]];
     ballImageView.frame = CGRectMake(0, 0, ballWidth, ballHeight);
-    ballImageView.center = CGPointMake([self displaySize].width/2, [self displaySize].height/2);
+    ballImageView.center = CGPointMake([self displaySize].width*1/4, [self displaySize].height/2);
     [self.view addSubview:ballImageView];
     self.ballImageView = ballImageView;
     
@@ -215,7 +215,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     
     [self.animator removeAllBehaviors];
     
-    self.ballImageView.center = CGPointMake([self displaySize].width/2, [self displaySize].height/2);
+    self.ballImageView.center = CGPointMake([self displaySize].width*1/4, [self displaySize].height/2);
     self.groundImageView.frame = CGRectMake(0, [self displaySize].height-40, 640, 40);
     [self.view insertSubview:self.groundImageView belowSubview:self.ballImageView];
     [self.sceneries addObject:self.groundImageView];
