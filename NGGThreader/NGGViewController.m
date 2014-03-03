@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
 @implementation NGGViewController
 
 //ViewControllerのViewが生成されたときに呼ばれる
-//UIに関する部分はここでaddSubViewする
+//UIに関する部分はここに書く。addSubViewするとか。
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -130,7 +130,7 @@ typedef NS_ENUM(NSInteger, NGGViewStatus) {
     for(UIView *scenary in self.sceneries){
         scenary.center = CGPointMake(scenary.center.x-SCROLL_SPEED, scenary.center.y);
         if(scenary.tag == TAG_BUILDING
-           && (int)(scenary.frame.origin.x+scenary.frame.size.width)==(int)([self displaySize].width/2)){
+           && (int)(scenary.frame.origin.x+scenary.frame.size.width)==(int)([self displaySize].width*1/4)){
             self.score++;
             [self updateScore];
         }
